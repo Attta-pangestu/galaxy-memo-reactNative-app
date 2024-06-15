@@ -7,6 +7,8 @@ import * as SplashScreen from "expo-splash-screen";
 import HomeScreen from "./screens/HomeScreen";
 import { useFonts } from "expo-font";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import NotesScreen from "./screens/NotesScreen";
+import CreateNoteScreen from "./screens/CreateNoteScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,7 +28,7 @@ function AnimatedSplashScreen({ children, image }) {
         useNativeDriver: true,
       }).start(() => setIsSplashAnimationFinished(true));
     }
-  }, []);
+  }, [isAppReady]);
 
   const onImageLoaded = useCallback(async () => {
     try {
@@ -99,6 +101,16 @@ export default function App() {
             name="Homescreen"
             component={HomeScreen}
             options={{ animation: "fade_from_bottom" }}
+          />
+          <Stack.Screen
+            name="NotesScreen"
+            component={NotesScreen}
+            options={{ animation: "fade" }}
+          />
+          <Stack.Screen
+            name="CreateNoteScreen"
+            component={CreateNoteScreen}
+            options={{ animation: "slide_from_bottom" }}
           />
         </Stack.Navigator>
       </AnimatedAppLoader>
