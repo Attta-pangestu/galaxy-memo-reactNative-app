@@ -14,21 +14,14 @@ import { useNavigation } from "@react-navigation/native";
 import LottieView from "lottie-react-native";
 import { FlatGrid } from "react-native-super-grid";
 import Card from "../components/Card";
-const HomeScreen = () => {
+const HomeScreen = ({ listNotes }) => {
   const navigation = useNavigation();
   const animation = useRef(null);
 
   const [notes, setNotes] = useState({});
-  const [listNotes, setListNotes] = useState([
-    {
-      id: 1,
-      title: "Note pertama",
-      description: "Lorem Ipsum is simply dummy text ",
-      createdAt: new Date(),
-    },
-  ]);
 
   const [createTooltip, setCreateTooltip] = useState(false);
+  const [historyTooltip, setHistoryTooltip] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
@@ -40,11 +33,11 @@ const HomeScreen = () => {
           className="mr-3 mb-3 rounded-3xl bg-slate-100 h-10 w-10 items-center justify-center p-1"
           style={{ elevation: 3 }}
           onPress={() => {}}
-          //   onLongPress={() => {
-          //     setHistoryTooltip(true);
-          //     Vibration.vibrate(100);
-          //   }}
-          //   onPressOut={() => setHistoryTooltip(false)}
+          onLongPress={() => {
+            setHistoryTooltip(true);
+            Vibration.vibrate(100);
+          }}
+          onPressOut={() => setHistoryTooltip(false)}
         >
           <Ionicons name={"grid-outline"} size={28} color="#4f4f4f" />
         </TouchableOpacity>

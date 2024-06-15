@@ -9,6 +9,7 @@ import { useFonts } from "expo-font";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import NotesScreen from "./screens/NotesScreen";
 import CreateNoteScreen from "./screens/CreateNoteScreen";
+import { initialListNotes } from "./datas/initialNotesData";
 
 const Stack = createNativeStackNavigator();
 
@@ -90,6 +91,7 @@ export default function App() {
     "Nunito-Bold": require("./assets/fonts/static/Nunito-Bold.ttf"),
     "Nunito-Medium": require("./assets/fonts/static/Nunito-Medium.ttf"),
   });
+  const [listNotes, setListNotes] = useState(initialListNotes);
 
   if (!isFontsLoaded) return null;
 
@@ -99,19 +101,21 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen
             name="Homescreen"
-            component={HomeScreen}
             options={{ animation: "fade_from_bottom" }}
-          />
-          <Stack.Screen
-            name="NotesScreen"
-            component={NotesScreen}
-            options={{ animation: "fade" }}
-          />
+          >
+            {(props) => <HomeScreen {...props} listNotes={listNotes} />}
+          </Stack.Screen>
+          <Stack.Screen name="NotesScreen" options={{ animation: "fade" }}>
+            {(props) => <NotesScreen {...props} setListNotes={setListNotes} />}
+          </Stack.Screen>
           <Stack.Screen
             name="CreateNoteScreen"
-            component={CreateNoteScreen}
             options={{ animation: "slide_from_bottom" }}
-          />
+          >
+            {(props) => (
+              <CreateNoteScreen {...props} setListNotes={setListNotes} />
+            )}
+          </Stack.Screen>
         </Stack.Navigator>
       </AnimatedAppLoader>
     </NavigationContainer>
